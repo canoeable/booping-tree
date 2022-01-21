@@ -34,6 +34,13 @@ addLayer("p", {
             return false
         }
     },
+    passiveGeneration() {
+        if (hasUpgrade('m', 13)) {
+            return new Decimal (1)
+        } else {
+            return new Decimal (0)
+        }
+    },
     upgrades: {
         11: {
             title: "upgrade row 1 col 1",
@@ -215,6 +222,18 @@ addLayer("m", {
                     return false
                 }
             }
-        }
+        },
+        13: {
+            title: "true automation",
+            description: "gain 100% of S gain on reset!",
+            cost: new Decimal (10),
+            unlocked() {
+                if (hasUpgrade('m', 12)) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        },
     }
 })
