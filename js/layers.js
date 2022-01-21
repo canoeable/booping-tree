@@ -139,9 +139,9 @@ addLayer("p", {
         21: {
             title: "finally!",
             description: "new layer!",
-            cost: new Decimal (250000),
+            cost: new Decimal (1),
             unlocked() {
-                if (player[this.layer].points.gte(200000)) {
+                if (player[this.layer].points.gte(250001)) {
                     return true
                 } else {
                     if (hasUpgrade('p', 21)) {
