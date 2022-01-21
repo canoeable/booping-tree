@@ -301,6 +301,6 @@ addLayer("b", {
         }
     },
     effectDescription() {
-        return "multiplying megaboop gain by " + format(tmp[this.layer].effect)
+        return "multiplying megaboop gain by " + format(tmp[this.layer].effect) + ". Next layer at 20 megaboops."
     }
 })
