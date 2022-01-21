@@ -206,6 +206,11 @@ addLayer("m", {
     effectDescription() {
         return "multiplying point gain by " + format(tmp[this.layer].effect)
     },
+    directMult() {
+        dmult = new Decimal (1)
+        dmult = dmult.times(layers.b.effect())
+        return dmult
+    },
     upgrades: {
         11: {
             title: "upgrades",
