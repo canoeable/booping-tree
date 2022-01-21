@@ -168,7 +168,7 @@ addLayer("m", {
     baseResource: "superboops", // Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.6, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -265,7 +265,7 @@ addLayer("b", {
     baseResource: "megaboops", // Name of resource prestige is based on
     baseAmount() {return player.m.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 1.11, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         return mult
@@ -301,6 +301,6 @@ addLayer("b", {
         }
     },
     effectDescription() {
-        return "multiplying megaboop gain by " + format(tmp[this.layer].effect) + ". Next layer at 20 megaboops."
+        return "multiplying megaboop gain by " + format(tmp[this.layer].effect)
     }
 })
