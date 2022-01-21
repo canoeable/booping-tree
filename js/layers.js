@@ -259,7 +259,7 @@ addLayer("b", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#047562",
+    color: "#4287F5",
     requires: new Decimal(20), // Can be a function that takes requirement increases into account
     resource: "megaboosters", // Name of prestige currency
     baseResource: "megaboops", // Name of resource prestige is based on
