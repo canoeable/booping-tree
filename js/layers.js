@@ -259,7 +259,7 @@ addLayer("b", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#4287F5",
+    color: "#047562",
     requires: new Decimal(20), // Can be a function that takes requirement increases into account
     resource: "megaboosters", // Name of prestige currency
     baseResource: "megaboops", // Name of resource prestige is based on
@@ -290,11 +290,11 @@ addLayer("b", {
     },
     branches: 'm',
     effect() {
-        if (player.b.points.pow(2).gte(1)) {
-            if (player.b.points.pow(2).gte(256)) {
+        if (player.b.points.add(1).pow(2).gte(1)) {
+            if (player.b.points.add(1).pow(2).gte(256)) {
                 return 256
             } else {
-                return player.b.points.pow(2)
+                return player.b.points.add(1).pow(2)
             }
         } else {
             return 1
