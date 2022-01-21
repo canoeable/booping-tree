@@ -204,7 +204,7 @@ addLayer("m", {
         }
     },
     effectDescription() {
-        return "multiplying point gain by " + format(tmp[this.layer].effect)
+        return "multiplying point gain by " + format(tmp[this.layer].effect) + ". Next layer at 20 megaboops."
     },
     directMult() {
         dmult = new Decimal (1)
