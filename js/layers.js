@@ -41,6 +41,15 @@ addLayer("p", {
             return new Decimal (0)
         }
     },
+    directMult() {
+        dmult = new Decimal (1)
+        if (hasUpgrade('p', 15)) {
+            dmult = dmult.times(3)
+        } else {
+            dmult = dmult
+        }
+        return dmult
+    },
     upgrades: {
         11: {
             title: "upgrade row 1 col 1",
