@@ -290,11 +290,11 @@ addLayer("b", {
     },
     branches: 'm',
     effect() {
-        if (Math.pow(2, player[this.layer].points).gte(1)) {
-            if (player[this.layer].points.times(3).gte(256)) {
+        if (player.b.points.pow(2).gte(1)) {
+            if (player.b.points.pow(2).gte(256)) {
                 return 256
             } else {
-                return Math.pow(2, player[this.layer].points)
+                return player.b.points.pow(2)
             }
         } else {
             return 1
