@@ -48,6 +48,7 @@ addLayer("p", {
         } else {
             dmult = dmult
         }
+        dmult = dmult.times(layers.a.effect())
         return dmult
     },
     upgrades: {
@@ -187,7 +188,11 @@ addLayer("m", {
             if (player[this.layer].points.gte(1)) {
                 return true
             } else {
-                return false
+                if (hasUpgrade('m', 11)) {
+                    return true
+                } else {
+                    return false
+                }
             }
         } 
     },
@@ -209,6 +214,7 @@ addLayer("m", {
     directMult() {
         dmult = new Decimal (1)
         dmult = dmult.times(layers.b.effect())
+        dmult = dmult.times(layers.a.effect())
         return dmult
     },
     upgrades: {
@@ -291,8 +297,8 @@ addLayer("b", {
     branches: 'm',
     effect() {
         if (player.b.points.add(1).pow(2).gte(1)) {
-            if (player.b.points.add(1).pow(2).gte(256)) {
-                return 256
+            if (player.b.points.add(1).pow(2).gte(25)) {
+                return 25
             } else {
                 return player.b.points.add(1).pow(2)
             }
@@ -302,5 +308,72 @@ addLayer("b", {
     },
     effectDescription() {
         return "multiplying megaboop gain by " + format(tmp[this.layer].effect)
+    },
+    milestones: {
+        0: {
+            requirementDescription: "12 Megaboosters",
+            effectDescription: "Dosen't reset M.",
+            done() { return player.b.points.gte(12) }
+        }
+    },
+    doReset(m) {
+        if (hasMilestone('b', 0)) {
+            return layerDataReset('m', layer.m.upgrades)
+        } else {
+            return layerDataReset('m')
+        }
+    },
+})
+addLayer("a", {
+    name: "trueboosters", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "TB", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#FF0A0A",
+    requires: new Decimal(20), // Can be a function that takes requirement increases into account
+    resource: "trueboosters", // Name of prestige currency
+    baseResource: "megaboops", // Name of resource prestige is based on
+    baseAmount() {return player.m.points}, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 1.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 2, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "t", description: "T: Reset for trueboosters", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){
+        if (player.m.points.gte(20)) {
+            return true
+        } else {
+            if (player[this.layer].total.gte(1)) {
+                return true
+            } else {
+                return false
+            }
+        } 
+    },
+    branches: 'm',
+    effect() {
+        if (player.a.points.times(0.1).add(1).gte(1)) {
+            if (player.a.points.times(0.1).add(1).gte(2)) {
+                return 2
+            } else {
+                return player.a.points.times(0.1).add(1)
+            }
+        } else {
+            return 1
+        }
+    },
+    effectDescription() {
+        return "multiplying gain of everything below by " + format(tmp[this.layer].effect)
     }
 })
