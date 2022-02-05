@@ -47,6 +47,8 @@ function getPointGen() {
 	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
 	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
 	if (player.m.points.gte(1)) gain = gain.times(player.m.points.times(3))
+	if (player.t.points.gte(1)) gain = gain.times(layer.t.effect)
+	if (player.c.points.gte(1)) gain = gain.times(new Decimal (25))
 	return gain
 }
 

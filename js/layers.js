@@ -1,4 +1,4 @@
-addLayer("p", {
+addLayer("p", { // Superboops
     name: "Superboops", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "S", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -17,6 +17,9 @@ addLayer("p", {
         mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('m', 11)) mult = mult.times(upgradeEffect('m', 11))
+        if (player.t.points.gte(2)) mult = mult.times(layer.t.effect.times(0.5))
+        if (player[this.layer].points.gte(100000)) mult = mult.pow(0.7)
+        if (player[this.layer].points.gte(10000000)) mult = mult.pow(0.7)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -155,7 +158,43 @@ addLayer("p", {
         },
     }
 })
-addLayer("m", {
+addLayer("c", { // ???
+    name: "Club Access", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "CA", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#1e1e1e",
+    requires: new Decimal("1e1e100"), // Can be a function that takes requirement increases into account
+    resource: "Club Access Cards", // Name of prestige currency
+    baseResource: "points", // Name of resource prestige is based on
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 0, // Row the layer is in on the tree (0 is the first row)
+    layerShown(){
+        if (player[this.layer].points.gte(1)) {
+            return true
+        } else {
+            return false
+        }
+    },
+    doReset() {
+        let keep = [];
+        keep.push("points");
+        layerDataReset(this.layer, keep);
+    }
+})
+addLayer("m", { // Megaboops
     name: "Megaboops", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "M", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -169,9 +208,10 @@ addLayer("m", {
     baseResource: "superboops", // Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 1, // Prestige currency exponent
+    exponent: 1.31, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (player.t.points.gte(3)) mult = mult.times(layer.t.effect.times(0.25))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -257,7 +297,7 @@ addLayer("m", {
         },
     }
 })
-addLayer("b", {
+addLayer("b", { // Megaboosters
     name: "megaboosters", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "MB", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -271,9 +311,10 @@ addLayer("b", {
     baseResource: "megaboops", // Name of resource prestige is based on
     baseAmount() {return player.m.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 1.39, // Prestige currency exponent
+    exponent: 1.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (player.t.points.gte(4)) mult = mult.times(layer.t.effect.times(0.125))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -309,22 +350,8 @@ addLayer("b", {
     effectDescription() {
         return "multiplying megaboop gain by " + format(tmp[this.layer].effect)
     },
-    milestones: {
-        0: {
-            requirementDescription: "12 Megaboosters",
-            effectDescription: "Dosen't reset M.",
-            done() { return player.b.points.gte(12) }
-        }
-    },
-    doReset(m) {
-        if (hasMilestone('b', 0)) {
-            return layerDataReset('m', layer.m.upgrades)
-        } else {
-            return layerDataReset('m')
-        }
-    },
 })
-addLayer("a", {
+addLayer("a", { // Trueboosters
     name: "trueboosters", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "TB", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -338,13 +365,14 @@ addLayer("a", {
     baseResource: "megaboops", // Name of resource prestige is based on
     baseAmount() {return player.m.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 1.5, // Prestige currency exponent
+    exponent: 1.7, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (player.t.points.gte(4)) mult = mult.times(layer.t.effect.times(0.125))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+        return new Decimal (1)
     },
     row: 2, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
@@ -364,8 +392,8 @@ addLayer("a", {
     branches: 'm',
     effect() {
         if (player.a.points.times(0.1).add(1).gte(1)) {
-            if (player.a.points.times(0.1).add(1).gte(2)) {
-                return 2
+            if (player.a.points.times(0.1).add(1).gte(5)) {
+                return 5
             } else {
                 return player.a.points.times(0.1).add(1)
             }
@@ -375,5 +403,58 @@ addLayer("a", {
     },
     effectDescription() {
         return "multiplying gain of everything below by " + format(tmp[this.layer].effect)
+    }
+})
+addLayer("t", { // Trueboops
+    name: "trueboops", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "Tb", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#FF0A0A",
+    requires: new Decimal(6), // Can be a function that takes requirement increases into account
+    resource: "trueboops", // Name of prestige currency
+    baseResource: "trueboosters", // Name of resource prestige is based on
+    baseAmount() {return player.a.points}, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 2, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal (1)
+    },
+    row: 3, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "q", description: "Q: Reset for trueboops", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){
+        if (player.b.points.gte(6) && player.a.points.gte(6)) {
+            return true
+        } else {
+            if (player[this.layer].total.gte(1)) {
+                return true
+            } else {
+                return false
+            }
+        } 
+    },
+    branches: 'a, b',
+    effect() {
+        if (player.t.points.times(2).add(1).gte(1)) {
+            if (player.t.points.times(2).add(1).gte(16)) {
+                return 16
+            } else {
+                return player.t.points.times(2).add(1)
+            }
+        } else {
+            return 1
+        }
+    },
+    effectDescription() {
+        return "multiplying gain of points by " + format(tmp[this.layer].effect) + ", row 1 layers by " + format(tmp[this.layer].effect.times(0.5)) + ", row 2 layers by " + format(tmp[this.layer].effect.times(0.25)) + " and row 3 layers by " + format(tmp[this.layer].effect.times(0.125)) + ". Effects below 1 are not applied."
     }
 })
