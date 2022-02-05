@@ -17,7 +17,7 @@ addLayer("p", { // Superboops
         mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('m', 11)) mult = mult.times(upgradeEffect('m', 11))
-        if (player.t.points.gte(2)) mult = mult.times(layer.t.effect.times(0.5))
+        if (player.t.points.gte(2)) mult = mult.times(tmp.t.effect)
         if (player[this.layer].points.gte(100000)) mult = mult.pow(0.7)
         if (player[this.layer].points.gte(10000000)) mult = mult.pow(0.7)
         return mult
@@ -211,7 +211,7 @@ addLayer("m", { // Megaboops
     exponent: 1.31, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (player.t.points.gte(3)) mult = mult.times(layer.t.effect.times(0.25))
+        if (player.t.points.gte(3)) mult = mult.times(tmp.t.effect)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -314,7 +314,7 @@ addLayer("b", { // Megaboosters
     exponent: 1.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (player.t.points.gte(4)) mult = mult.times(layer.t.effect.times(0.125))
+        if (player.t.points.gte(4)) mult = mult.times(tmp.t.effect)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -368,7 +368,7 @@ addLayer("a", { // Trueboosters
     exponent: 1.7, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (player.t.points.gte(4)) mult = mult.times(layer.t.effect.times(0.125))
+        if (player.t.points.gte(4)) mult = mult.times(tmp.t.effect)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -455,6 +455,6 @@ addLayer("t", { // Trueboops
         }
     },
     effectDescription() {
-        return "multiplying gain of points by " + format(tmp[this.layer].effect) + ", row 1 layers by " + format(tmp[this.layer].effect.times(0.5)) + ", row 2 layers by " + format(tmp[this.layer].effect.times(0.25)) + " and row 3 layers by " + format(tmp[this.layer].effect.times(0.125)) + ". Effects below 1 are not applied."
+        return "multiplying gain of everything below this layer by " + format(tmp[this.layer].effect)
     }
 })
