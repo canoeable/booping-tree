@@ -2,7 +2,7 @@ let modInfo = {
 	name: "The Booping Tree",
 	id: "nothere.e",
 	author: "theepichub",
-	pointsName: "boops",
+	pointsName: "boops (discontinued project. please check changelog.)",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
@@ -13,11 +13,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0",
+	name: "Project Discontinued",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v1.0</h3><br>
+		- Discontinued project. You can still play, but<br>
+		  I have made a new version here:
+		
 	<h3>v0.0</h3><br>
 		- Added things.<br>
 		- Added stuff.`
