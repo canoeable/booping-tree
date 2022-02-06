@@ -156,6 +156,13 @@ addLayer("p", { // Superboops
                 }
             }
         },
+        effectDescription() {
+            if (player[this.layer].points.gte(100000)) {
+                return (softcapped)
+            } else {
+                return
+            }
+        }
     }
 })
 addLayer("c", { // ???
@@ -192,6 +199,20 @@ addLayer("c", { // ???
         let keep = [];
         keep.push("points");
         layerDataReset(this.layer, keep);
+    }
+})
+addLayer("Cap Info", { // Caps
+    name: "Cap Info", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "CI", // This appears on the layer's node. Default is the id with the first letter capitalized
+    color: "#4BDC13",
+    type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    row: "side",
+    tooltip: "Cap Info",
+    infoboxes: {
+        Row1: {
+            title: "softcaps",
+            body() { return "Superboops: 100,000 and every 2 OoMs after (so 100,000, 10,000,000 etc) the gain is brought to the 0.7th power. Megaboops: After 100 and every OoM after that, gain is brought to ^0.9" },
+        },
     }
 })
 addLayer("m", { // Megaboops
