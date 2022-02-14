@@ -21,7 +21,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	<h3>v1.0</h3><br>
 		- Discontinued project. You can still play, but<br>
 		  I have made a new version here:<br>
-		  https://theepichub.github.io/the-tree/<br>
+		  https://canoeable.github.io/the-tree/<br>
 	<h3>v0.0</h3><br>
 		- Added things.<br>
 		- Added stuff.`
